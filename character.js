@@ -22,7 +22,7 @@ class Character {
     }
   }
 
-  dealDamage(victim, givenDmg) {
+  dealDamage(victim, givenDmg = this.dmg) {
     victim.takeDamage(this, givenDmg);
   }
 
