@@ -18,11 +18,12 @@ class Character {
       this.status = 'loser';
       console.log(`${this.name} vient de trépasser !`);
       attacker.mana += 20;
+      console.log(`${attacker.name} récupère donc 20 points de mana !`)
     }
   }
 
-  dealDamage(victim) {
-    victim.takeDamage(this, this.dmg);
+  dealDamage(victim, givenDmg) {
+    victim.takeDamage(this, givenDmg);
   }
 
 } 
