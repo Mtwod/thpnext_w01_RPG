@@ -23,7 +23,9 @@ class Character {
   }
 
   dealDamage(victim, givenDmg = this.dmg) {
-    victim.takeDamage(this, givenDmg);
+    if (victim.status != 'loser') {
+      victim.takeDamage(this, givenDmg);
+    }
   }
 
 } 
