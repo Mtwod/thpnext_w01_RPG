@@ -3,16 +3,13 @@ class Monk extends Character {
     super(name, hp, dmg, mana, status);
   }
 
-  takeDamage(attacker, takenDmg) {
-    this.hp -= takenDmg;
-    this.isDead(attacker);
-  }
-
-  heal() {
+  specialSkill() {
     if (this.mana >= 25) {
       this.mana -= 25;
       this.hp += 8;
-      console.log(`${this.name} se soigne de 8 HP !`);
+      console.log(`${this.name} heals himself and gains 8 HP !`);
+    } else {
+      console.log("You don't possess enough mana for this !");
     }
   }
 }
