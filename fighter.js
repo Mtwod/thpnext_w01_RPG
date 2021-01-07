@@ -18,7 +18,7 @@ class Fighter extends Character {
       this.mana -= 20;
       this.dealDamage(victim, 5);
       this.bonusTurn += 1;
-      console.log(`${this.name} uses his special attack Dark Vision on ${victim.name} and deals 5 damage points! His defense rises by 2 until next turn.`);
+      console.log(`${this.name} uses special attack Dark Vision on ${victim.name} and deals 5 damage points! Defense rises by 2 until next turn.`);
     } else {
       console.log("You don't possess enough mana for this !");
     }

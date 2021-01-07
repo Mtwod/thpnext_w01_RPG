@@ -49,14 +49,8 @@ class Game {
   }
 
   winningPlayers() {
-    console.log('CI-DESSOUS, LA LISTE DE TOUS LES PERSONNAGES');
-    console.log(this.characters);
     const maxHp = this.characters.map((character) => character.hp).reduce((accumulator, currentCharacterHp) => Math.max(accumulator, currentCharacterHp));
-    console.log('CI-DESSOUS LE MAX DE HP');
-    console.log(maxHp);
     const winners = this.characters.filter((character) => character.hp === maxHp);
-    console.log('CI-DESSOUS, LA LISTE DES VAINQUEURS');
-    console.log(winners);
     return winners;
   }
 

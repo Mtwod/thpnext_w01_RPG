@@ -15,11 +15,15 @@ class Character {
 
   isKilled(attacker) {
     if (this.hp === 0) {
-      this.status = 'loser';
-      console.log(`${this.name} just perished!`);
+      this.died();
       attacker.mana += 20;
-      console.log(`${attacker.name} recovers 20 mana points!`)
+      console.log(`${attacker.name} recovers 20 mana points!`);
     }
+  }
+
+  died() {
+    this.status = 'loser';
+    console.log(`${this.name} just perished!`);
   }
 
   dealDamage(victim, givenDmg = this.dmg) {

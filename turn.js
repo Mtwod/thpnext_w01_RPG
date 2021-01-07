@@ -42,8 +42,17 @@ class Turn {
   displayActionChoice(character) {
     return `Turn n°${this.number}\n${character.name}, what will you do?\n\n- Type 'a' to attack\n- Type 's' to use the special skill\n- Type 'w' to watch the stats of the remaining players`;
   }
+  
+  isAssassinHidden(character) {
+    return character instanceof Assassin && character.hidden;
+  }
 
   actionChoice(character) {
+    if (this.isAssassinHidden(character)) {
+      character.shadowHit();
+      alert(`Check your console to see what ${character.name} did!`);
+      return;
+    }
     let choice = prompt(`${this.displayActionChoice(character)}`);
     while (true) {
       switch (choice) {
@@ -57,7 +66,9 @@ class Turn {
           if (character instanceof Monk) {
             character.specialSkill();
           } else {
-            character.specialSkill(this.victimChoice(character));
+            const victim = this.victimChoice(character);
+            character.specialSkill(victim);
+            victim.isKilled(character);
           }
           return;
         case 'w':
@@ -68,6 +79,10 @@ class Turn {
           choice = prompt(`You entered a wrong input, please try again! I'll repeat :\n\n${this.displayActionChoice(character)}`);
       }
     }
+  }
+
+  decrementBonusTurn(character) {
+    if (character.bonusTurn > 0) character.bonusTurn -= 1;
   }
 
   displayCharacterStats(character) {
@@ -87,6 +102,7 @@ class Turn {
     this.characters.forEach(function (character) {
       if (character.status == 'playing') {
         console.log(`It's time for ${character.name} to play.`);
+        this.decrementBonusTurn(character);
         this.actionChoice(character);
       } else {
         console.log(`OOPS : ${character.name} is dead and can't play.`);

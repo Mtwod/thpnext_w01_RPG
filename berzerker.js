@@ -3,10 +3,10 @@ class Berzerker extends Character {
     super(name, hp, dmg, mana, status);
   }
 
-  specialSkill() {
+  specialSkill(victim) {
     this.hp -= 1;
     this.dmg += 1;
-    this.dealDamage(victim, this.dmg)
-    console.log(`${this.name} uses Rage! His attacks are now fiercer and its first victim is ${victim.name} ! Dealing ${this.dmg} damage points!`);
+    this.dealDamage(victim, this.dmg);
+    console.log(`${this.name} uses Rage! His attacks are now fiercer and its victim is ${victim.name} ! Dealing ${this.dmg} damage points!`);
   }
 }
