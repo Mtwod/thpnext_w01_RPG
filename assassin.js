@@ -23,7 +23,7 @@ class Assassin extends Character {
   }
 
   displaySpecialSkillInfo() {
-    console.log("Shadow Hit: choose a target then hide in the shadows, thus becoming invincible. At next turn, you will deal 7 damage points to your target, but BEWARE! If your target is still alive, you will lose 7 hp...");
+    console.log("Shadow Hit (20 mana points): choose a target then hide in the shadows, thus becoming invincible. At next turn, you will deal 7 damage points to your target, but BEWARE! If your target is still alive, you will lose 7 hp...");
   }
   
   specialSkill(victim) {

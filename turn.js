@@ -29,7 +29,7 @@ class Turn {
     while (true) {
       if (choice === 'w') {
         this.watchStats();
-        choice = prompt(`The stats has been displayed in the console!\n\n${this.displayVictimChoice(currentCharacter)}`);
+        choice = prompt(`The stats have been displayed in the console!\n\n${this.displayVictimChoice(currentCharacter)}`);
       } else if (choice === 'i') {
         currentCharacter.displaySpecialSkillInfo();
         choice = prompt(`The special skill info has been displayed in the console!\n\n${this.displayVictimChoice(currentCharacter)}`);
@@ -84,7 +84,7 @@ class Turn {
           break;
         case 'w':
           this.watchStats();
-          choice = prompt(`The stats has been displayed in the console!\n\n${this.displayActionChoice(character)}`);
+          choice = prompt(`The stats have been displayed in the console!\n\n${this.displayActionChoice(character)}`);
           break;
         case 'i':
           character.displaySpecialSkillInfo();

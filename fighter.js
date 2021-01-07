@@ -22,7 +22,7 @@ class Fighter extends Character {
   }
 
   displaySpecialSkillInfo() {
-    console.log("Dark Vision: deal 5 damage to your target and increase your defense by 2 until next turn.");
+    console.log("Dark Vision (20 mana points): deal 5 damage to your target and increase your defense by 2 until next turn.");
   }
 
   specialSkill(victim) {

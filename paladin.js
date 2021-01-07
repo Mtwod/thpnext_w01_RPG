@@ -12,7 +12,7 @@ class Paladin extends Character {
   }
 
   displaySpecialSkillInfo() {
-    console.log("Healing Lighting: inflict 4 of damage while healing himself of 5 hp.");
+    console.log("Healing Lighting (40 mana points): inflict 4 of damage while healing himself of 5 hp.");
   }
 
 

@@ -12,7 +12,7 @@ class Monk extends Character {
   }
   
   displaySpecialSkillInfo() {
-    console.log("Heal: heal yourself of 8 hp");
+    console.log("Heal (25 mana points): heal yourself of 8 hp");
   }
 
   specialSkill() {
