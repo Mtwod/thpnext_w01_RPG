@@ -40,9 +40,8 @@ class Game {
     }
   }
 
-  displayStats() {
-    console.log(this);
-    this.characters.forEach((character) => this.displayCharacterStats(character), this);
+  watchStats() {
+    this.characters.filter((character) => character.status == 'playing').forEach((character) => this.displayCharacterStats(character), this);
   }
   
   isContinuing() {
@@ -50,16 +49,30 @@ class Game {
   }
 
   winningPlayers() {
-    const maxHp = this.characters.reduce((maxHp, currentCharacter) => Math.max(maxHp, currentCharacter.hp));
+    console.log('CI-DESSOUS, LA LISTE DE TOUS LES PERSONNAGES');
+    console.log(this.characters);
+    const maxHp = this.characters.map((character) => character.hp).reduce((accumulator, currentCharacterHp) => Math.max(accumulator, currentCharacterHp));
+    console.log('CI-DESSOUS LE MAX DE HP');
+    console.log(maxHp);
     const winners = this.characters.filter((character) => character.hp === maxHp);
+    console.log('CI-DESSOUS, LA LISTE DES VAINQUEURS');
+    console.log(winners);
     return winners;
   }
 
+  displayWinners(winners) {
+    let winnersList = '';
+    winners.forEach((winner) => {
+      winnersList += `${winner.name}, `;
+    });
+    return winnersList;
+  }
+
   displayEnd(winners) {
-    if (winners.length === 0) {
+    if (winners.length === 1) {
       console.log(`Congratulations ${winners[0].name}, you are victorious!`);
-    } else if (winners.length > 0) {
-      console.log(`WOW! We have more than one winner! Congratulations ${winners.forEach((winner) => `${winner.name}, `)}you won this game!`);
+    } else if (winners.length > 1) {
+      console.log(`WOW! We have more than one winner! Congratulations ${this.displayWinners(winners)}you won this game!`);
     } else {
       console.log('Oops, we have a problem here!');
     }
@@ -71,17 +84,14 @@ class Game {
     console.log("Thanks for playing!");
   }
 
-  watchStats() {
-    this.characters.forEach((character) => {
-      this.displayStats(character);
-    });
-  }
-
   perform() {
-    this.displayStats();
+    this.watchStats();
+    let remainingCharacters = this.characters.filter((character) => character.status == 'playing');
     while (this.isContinuing()) {
-      const turn = new Turn(11 - this.turnLeft, this.characters);
+      const turn = new Turn(11 - this.turnLeft, remainingCharacters);
       turn.perform();
+      this.turnLeft -= 1;
+      remainingCharacters = remainingCharacters.filter((character) => character.status == 'playing');
     }
     this.end();
   }

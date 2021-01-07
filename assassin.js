@@ -4,9 +4,9 @@ class Assassin extends Character {
     this.hidden = hidden;
   }
 
-  takeDamage(attacker, takenDmg) {
+  takeDamage(takenDmg) {
     this.hp -= takenDmg;
-    this.isKilled(attacker);
+    if (this.hp <= 0) this.hp = 0;
   }
 
   specialSkill(victim) {

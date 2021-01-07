@@ -8,14 +8,13 @@ class Character {
     this.bonusTurn = bonusTurn;
   }
 
-  takeDamage(attacker, takenDmg) {
+  takeDamage(takenDmg) {
     this.hp -= takenDmg;
-    this.isKilled(attacker);
+    if (this.hp <= 0) this.hp = 0;
   }
 
   isKilled(attacker) {
-    if (this.hp <= 0) {
-      this.hp = 0;
+    if (this.hp === 0) {
       this.status = 'loser';
       console.log(`${this.name} just perished!`);
       attacker.mana += 20;
@@ -27,7 +26,7 @@ class Character {
     if (victim.status == 'loser') {
       console.log("You're attacking a corpse, shame on you!");
     } else {
-      victim.takeDamage(this, givenDmg);
+      victim.takeDamage(givenDmg);
     }
   }
 } 

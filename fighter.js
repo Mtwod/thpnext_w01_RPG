@@ -4,13 +4,13 @@ class Fighter extends Character {
     this.defense = defense;
   }
 
-  takeDamage(attacker, takenDmg) {
+  takeDamage(takenDmg) {
     if (this.bonusTurn > 0) {
       takenDmg -= this.defense;
       if (takenDmg < 0) takenDmg = 0;
     }
     this.hp -= takenDmg;
-    this.isKilled(attacker);
+    if (this.hp <= 0) this.hp = 0;
   }
 
   specialSkill(victim) {
