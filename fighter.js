@@ -5,7 +5,7 @@ class Fighter extends Character {
   }
 
   takeDamage(attacker, takenDmg) {
-    if (bonusTurn > 0) {
+    if (this.bonusTurn > 0) {
       takenDmg -= this.defense;
       if (takenDmg < 0) takenDmg = 0;
     }

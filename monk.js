@@ -7,7 +7,7 @@ class Monk extends Character {
     if (this.mana >= 25) {
       this.mana -= 25;
       this.hp += 8;
-      console.log(`${this.name} heals himself and gains 8 HP !`);
+      console.log(`${this.name} heals himself for 8HP and has now ${this.hp} HP !`);
     } else {
       console.log("You don't possess enough mana for this !");
     }

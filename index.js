@@ -5,6 +5,6 @@
 console.log("To begin, type 'gameStart()' in the console!");
 
 const gameStart = () => {
-  let game = new Game();
+  const game = new Game();
   game.perform();
 }

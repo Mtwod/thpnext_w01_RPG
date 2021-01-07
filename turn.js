@@ -1,17 +1,19 @@
 class Turn {
-  constructor(turnNumber, characters) {
-    this.turnNumber = turnNumber;
+  constructor(number, characters) {
+    this.number = number;
     this.characters = characters;
   }
 
   startTurn() {
-    console.log(`It's turn ${turnNumber}`);
+    console.log(`It's turn ${this.number}`);
   }
 
-  victimChoice(character) {
-    let currentCharacterIndex = this.characters.indexOf(currentCharacter);
-    let potentialVictims = this.characters.splice(currentCharacterIndex, 1);
-    console.log("Below, the list of the potential victims of your wrath :")
+  victimChoice(currentCharacter) {
+    let potentialVictims = [ ...this.characters ];
+    const currentCharacterIndex = potentialVictims.indexOf(currentCharacter);
+    potentialVictims.splice(currentCharacterIndex, 1);
+
+    console.log("Below, the list of the potential victims of your wrath :");
     for (let i = 0; i < potentialVictims.length; i++) {
       console.log(`${i} - ${potentialVictims[i].name}`);
     }
@@ -29,19 +31,24 @@ class Turn {
 
   actionChoice(character) {
     let choice = prompt("Type 'a' to attack or 's' to use the special skill");
-    let validChoice = false;
-    while (validChoice == false) {
-      if (choice = 'a') {
-        let victim = this.victimChoice(character);
+    while (true) {
+      if (choice === 'a') {
+        const victim = this.victimChoice(character);
         character.dealDamage(victim);
-        console.log(`${character.name} deals ${character.dmg} damages to ${victim.name}. ${victim.name} has now ${victim.hp} health points left.`)
-      }
-      if (choice = 's') {
+        console.log(`${character.name} deals ${character.dmg} damages to ${victim.name}. ${victim.name} has now ${victim.hp} health points left.`);
+        return ;
+      } 
+      else if (choice === 's') {
         if (character instanceof Monk) {
           character.specialSkill();
           return;
+        } else {
+          character.specialSkill(this.victimChoice(character));
+          return;
         }
-        character.specialSkill(this.victimChoice(character));
+      }
+      else {
+        choice = prompt("You entered a wrong input, please try again!");
       }
     }
   }
@@ -51,6 +58,6 @@ class Turn {
     this.characters.forEach(function (character) {
       console.log(`It's time for ${character.name} to play.`);
       this.actionChoice(character);
-    });
+    }, this);
   }
 }
