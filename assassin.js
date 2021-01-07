@@ -1,6 +1,6 @@
 class Assassin extends Character {
-  constructor(name = 'Carl', hp = 6, dmg = 6, mana = 20, status, hidden = false, target = null) {
-    super(name, hp, dmg, mana, status);
+  constructor(name = 'Carl', hp = 6, dmg = 6, mana = 20, status, role = 'Assassin', hidden = false, target = null) {
+    super(name, hp, dmg, mana, status, role);
     this.hidden = hidden;
     this.target = target;
   }
@@ -13,18 +13,24 @@ class Assassin extends Character {
     this.hp -= takenDmg;
     if (this.hp <= 0) this.hp = 0;
   }
+
+  isSpecialSkillConditionsRespected() {
+    return this.mana >= 20;
+  }
+
+  displaySpecialSkillConditionsViolated() {
+    alert("You don't possess enough mana for this!");
+  }
+
+  displaySpecialSkillInfo() {
+    console.log("Shadow Hit: choose a target then hide in the shadows, thus becoming invincible. At next turn, you will deal 7 damage points to your target, but BEWARE! If your target is still alive, you will lose 7 hp...");
+  }
   
   specialSkill(victim) {
-    if (this.mana >= 20) {
-      this.mana -= 20;
-      this.hidden = true;
-      this.target = victim;
-      console.log(`${this.name} uses Shadow hit and hides in shadows...`);
-    } else if (this.hidden) {
-      this.shadowHit();
-    } else {
-      console.log("You don't possess enough mana for this !");
-    }
+    this.mana -= 20;
+    this.hidden = true;
+    this.target = victim;
+    console.log(`${this.name} uses Shadow hit and hides in shadows...`);
   }
 
   shadowHit() {
@@ -44,7 +50,6 @@ class Assassin extends Character {
         if (this.hp <= 0) {
           this.died();
         }
-
       }
     }
     this.target = null;

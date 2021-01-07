@@ -9,18 +9,20 @@ class Turn {
   }
 
   displayVictimChoice(character) {
-    return `Turn n°${this.number}\n${character.name}, who will you slay?\n\nSelect the target by typing the number associated to its name in the list displayed in the console,\nor type 'w' to watch the stats of the remaining players.`;
+    return `Turn n°${this.number}\n${character.role} ${character.name}, who will you slay?\n\n- Select the target by typing the number associated to its name in the list displayed in the console,\n- Type 'w' to watch the stats of the remaining players\n- Type 'i' to get informations on your character's special skill`;
   }
 
   victimChoice(currentCharacter) {
     let potentialVictims = [ ...this.characters ];
+    const assassinIndex = potentialVictims.indexOf(potentialVictims.find((character) => character instanceof Assassin));
+    if (potentialVictims[assassinIndex].hidden) potentialVictims.splice(assassinIndex, 1);
     const currentCharacterIndex = potentialVictims.indexOf(currentCharacter);
     potentialVictims.splice(currentCharacterIndex, 1);
     potentialVictims = potentialVictims.filter((character) => character.status === 'playing');
 
     console.log("Below, the list of the potential victims of your wrath :");
     for (let i = 0; i < potentialVictims.length; i++) {
-      console.log(`${i} - ${potentialVictims[i].name}`);
+      console.log(`${i} - ${potentialVictims[i].name} (${potentialVictims[i].role}, hp left: ${potentialVictims[i].hp} )`);
     }
 
     let choice = prompt(`${this.displayVictimChoice(currentCharacter)}`);
@@ -28,6 +30,9 @@ class Turn {
       if (choice === 'w') {
         this.watchStats();
         choice = prompt(`The stats has been displayed in the console!\n\n${this.displayVictimChoice(currentCharacter)}`);
+      } else if (choice === 'i') {
+        currentCharacter.displaySpecialSkillInfo();
+        choice = prompt(`The special skill info has been displayed in the console!\n\n${this.displayVictimChoice(currentCharacter)}`);
       } else if (choice === null || choice === '' || choice.match(/\D/)) {
         choice = prompt(`You entered a wrong input, please try again! I'll repeat :\n\n${this.displayVictimChoice(currentCharacter)}`);
       } else if (choice >= 0 && choice < potentialVictims.length) {
@@ -40,7 +45,7 @@ class Turn {
   }
 
   displayActionChoice(character) {
-    return `Turn n°${this.number}\n${character.name}, what will you do?\n\n- Type 'a' to attack\n- Type 's' to use the special skill\n- Type 'w' to watch the stats of the remaining players`;
+    return `Turn n°${this.number}\n${character.role} ${character.name}, what will you do?\n\n- Type 'a' to attack\n- Type 's' to use the special skill\n- Type 'w' to watch the stats of the remaining players\n- Type 'i' to get informations on your character's special skill`;
   }
   
   isAssassinHidden(character) {
@@ -63,17 +68,27 @@ class Turn {
           victim.isKilled(character);
           return;
         case 's':
-          if (character instanceof Monk) {
-            character.specialSkill();
+          if (character.isSpecialSkillConditionsRespected()) {
+            if (character instanceof Monk) {
+              character.specialSkill();
+            } else {
+              const victim = this.victimChoice(character);
+              character.specialSkill(victim);
+              victim.isKilled(character);
+            }
+            return;
           } else {
-            const victim = this.victimChoice(character);
-            character.specialSkill(victim);
-            victim.isKilled(character);
+            character.displaySpecialSkillConditionsViolated();
+            choice = prompt(`${this.displayActionChoice(character)}`);
           }
-          return;
+          break;
         case 'w':
           this.watchStats();
           choice = prompt(`The stats has been displayed in the console!\n\n${this.displayActionChoice(character)}`);
+          break;
+        case 'i':
+          character.displaySpecialSkillInfo();
+          choice = prompt(`The special skill info has been displayed in the console!\n\n${this.displayActionChoice(character)}`);
           break;
         default:
           choice = prompt(`You entered a wrong input, please try again! I'll repeat :\n\n${this.displayActionChoice(character)}`);
